@@ -1,0 +1,28 @@
+version: '3'
+services:
+
+  db:
+    image: postgres
+    env_file: /home/batuhan/Documents/GitHub/Get_table/local.env
+      # POSTGRES_USER: postgres
+      # POSTGRES_PASSWORD: postgres
+      # POSTGRES_DB: app_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  web_deneme:
+    container_name: web_deneme
+    build: .
+    env_file: /home/batuhan/Documents/GitHub/Get_table/local.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - TZ=Europe/Istanbul
+
+volumes:
+  postgres_data:
+  
