@@ -26,7 +26,8 @@ origins = [
     "file:///home/batuhan/Documents/GitHub/html_table/index.html",
     "file:///home/batuhan/Documents/GitHub/html_table/index.html",
     "http://localhost:5500",
-    "http://127.0.0.1:5500"
+    "http://127.0.0.1:5500",
+    "http://localhost:5173"
 
 ]
 
@@ -57,6 +58,10 @@ async def create_table():
 	register_date VARCHAR
 );  """)
 
+class User(BaseModel):
+    email: str
+    password: str
+    date: str
 
     
 create_table()
@@ -88,3 +93,28 @@ async def get_user(
         "success":True
         }
     )
+
+@app.post("/register")
+async def create_user(user: User):
+    try:
+        cur = conn.cursor()
+        email = user.email
+        password = user.password
+        date = user.date
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        info ={
+
+            "email":email,
+            "password":hashed_password,
+            "date":date,
+
+        }
+        
+        cur.execute(sqlquery.insert_data.format(**info))
+        conn.commit()
+        cur.execute("SELECT * FROM users")
+        results = cur.fetchall()
+        conn.rollback()
+        return JSONResponse(content=results)
+    except psycopg2.errors.UniqueViolation:
+        return "Mail adresi Kullanılmaktadır", status.HTTP_406_NOT_ACCEPTABLE

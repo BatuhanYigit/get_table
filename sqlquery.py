@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS "lessons_notes" (
 );  
 """
 
-insert_data = """INSERT INTO users (email,password,role,register_date) VALUES ('{email}', '{password}', '{role}','{register_date}')"""
+insert_data = """INSERT INTO users (email,password,date) VALUES ('{email}', '{password}', '{date}')"""
 
 check_login = """SELECT * FROM users WHERE email='{email}' AND password='{password}' """
 
