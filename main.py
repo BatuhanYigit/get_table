@@ -118,3 +118,26 @@ async def create_user(user: User):
         return JSONResponse(content=results)
     except psycopg2.errors.UniqueViolation:
         return "Mail adresi Kullanılmaktadır", status.HTTP_406_NOT_ACCEPTABLE
+    
+
+@app.delete("/delete-users/{id}/")
+async def delete_user(
+    id = int
+):  
+    cur = conn.cursor()
+    
+    info = {
+        "id":id
+    }
+    
+    cur.execute(sqlquery.delete_user.format(**info))
+    conn.commit()
+    data_last = pd.read_sql_query("SELECT * FROM users",conn)
+    print(data_last.to_dict("records"))
+    return JSONResponse(
+        content={
+        "data": data_last.to_dict("records"),
+        "success": True
+        }
+    
+    )

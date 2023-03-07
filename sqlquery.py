@@ -39,7 +39,9 @@ update_lesson = """UPDATE lessons_notes SET exam_marks = '{exam_marks}', letter_
 
 check_register_date = """SELECT register_date FROM users WHERE email='{email}'"""
 
-get_user = """SELECT * FROM users WHERE id = {id}"""
+get_user = """SELECT * FROM users WHERE id = '{id}'"""
+
+delete_user = """DELETE FROM users WHERE id = '{id}'"""
 
 
 
