@@ -27,7 +27,9 @@ origins = [
     "file:///home/batuhan/Documents/GitHub/html_table/index.html",
     "http://localhost:5500",
     "http://127.0.0.1:5500",
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://localhost:5174"
+
 
 ]
 
@@ -100,13 +102,15 @@ async def create_user(user: User):
         cur = conn.cursor()
         email = user.email
         password = user.password
-        date = user.date
+        role = "user"
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        register_date = datetime.datetime.now()
         info ={
 
             "email":email,
             "password":hashed_password,
-            "date":date,
+            "role":role,
+            "register_date":register_date
 
         }
         

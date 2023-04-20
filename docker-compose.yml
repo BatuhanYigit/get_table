@@ -4,9 +4,6 @@ services:
   db:
     image: postgres
     env_file: /home/batuhan/Documents/GitHub/get_table/local.env
-      # POSTGRES_USER: postgres
-      # POSTGRES_PASSWORD: postgres
-      # POSTGRES_DB: app_db
     ports:
       - "5432:5432"
     volumes:
@@ -25,4 +22,3 @@ services:
 
 volumes:
   postgres_data:
-  
